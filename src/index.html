@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<svg id="board" viewBox="-600 -400 1200 800" width="1200" height="800" transform = "scale(1)" style="border: solid black 1px">
+<svg id="board" width="1200" height="800" transform = "scale(1)" style="border: solid black 1px">
 </svg>
 
 <script>
@@ -32,9 +32,10 @@
     }
 
     const svg = document.getElementById("board");
+    const vbWidth = 1200, vbHeight = 800;
 
     // update viewBox so center of board is preserved.
-    svg.setAttribute("viewBox", `${50 * (maxX + minX) - 600} ${50 * Math.abs(maxY + minY) - 400} 1200 800`);
+    svg.setAttribute("viewBox", `${50 * (maxX + minX) - vbWidth / 2} ${50 * Math.abs(maxY + minY) - vbHeight / 2} ${vbWidth} ${vbHeight}`);
 
     for (let tile of board) {
         const tileSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
