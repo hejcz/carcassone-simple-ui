@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<svg id="board" viewBox="-600 -400 1200 800" width="1200" height="800" transform = "scale(1)" style="border: solid black 1px">
+</svg>
+
+<script>
+    const board = [
+        {"x": 0, "y": 0, "rot": 0, "id": 'd'},
+        {"x": 1, "y": 0, "rot": 90, "id": 'l'},
+        {"x": 1, "y": -1, "rot": 90, "id": 'v'},
+        {"x": -1, "y": 0, "rot": 90, "id": 'u'},
+        {"x": -1, "y": -1, "rot": 90, "id": 'u'},
+        {"x": -2, "y": 0, "rot": 270, "id": 'v'},
+        {"x": -2, "y": -1, "rot": 180, "id": 'v'},
+        {"x": 0, "y": -1, "rot": 0, "id": 'w'},
+    ];
+
+    let maxX = maxY = minX = minY = 0;
+    for (let tile of board) {
+        if (tile.x > maxX)
+            maxX = tile.x;
+        if (tile.x < minX)
+            minX = tile.x;
+        if (tile.y > maxY)
+            maxY = tile.y;
+        if (tile.y < minY)
+            minY = tile.y;
+    }
+
+    const svg = document.getElementById("board");
+
+    // update viewBox so center of board is preserved.
+    svg.setAttribute("viewBox", `${50 * (maxX + minX) - 600} ${50 * Math.abs(maxY + minY) - 400} 1200 800`);
+
+    for (let tile of board) {
+        const tileSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        const xPos = tile.x * 100 - 50;
+        const yPos = -tile.y * 100 - 50;
+        tileSvg.setAttribute("x", xPos);
+        tileSvg.setAttribute("y", yPos);
+        tileSvg.setAttribute("width", 100);
+        tileSvg.setAttribute("height", 100);
+        if (tile.rot !== 0) {
+            tileSvg.setAttribute("transform", `rotate(${tile.rot} ${xPos + 50} ${yPos + 50})`);
+        }
+        const tileImg = document.createElementNS("http://www.w3.org/2000/svg", "image");
+        tileImg.setAttribute("href", `/assets/${tile.id}.png`);
+        tileSvg.appendChild(tileImg);
+        svg.appendChild(tileSvg);
+    }
+</script>
+
+
+<!--    <svg x=-50 y = -50 width="100" height="100">-->
+<!--        <image href="/assets/d.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=50 y = -150 width="100" height="100" transform = "rotate(180 100 -100)">-->
+<!--        <image href="/assets/b.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=-50 y = -150 width="100" height="100" transform = "rotate(180 0 -100)">-->
+<!--        <image href="/assets/e.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=-150 y = -50 width="100" height="100">-->
+<!--        <image href="/assets/d.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=-20 y = -80 width="40" height="40">-->
+<!--        <image  width="40" height="40" href="/assets/blue.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=-5 y = -65 width="30" height="30">-->
+<!--        <image  width="30" height="30" href="/assets/red.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=-15 y = -65 width="30" height="30">-->
+<!--        <image  width="30" height="30" href="/assets/red.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=100 width="100" height="100" transform = "translate(100, -100) rotate(90 50 50)">-->
+<!--        <image href="/assets/b.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=200 width="100" height="100" transform = "translate(200, -200) rotate(90 50 50)">-->
+<!--        <image href="/assets/c.png"></image>-->
+<!--    </svg>-->
+<!--    <svg x=0 y=100 width="100" height="100" transform = "translate(100, 100) rotate(90 50 50)">-->
+<!--        <image href="/assets/d.png"></image>-->
+<!--    </svg>-->
+
+</body>
+</html>
